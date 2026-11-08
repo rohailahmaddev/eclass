@@ -1,0 +1,35 @@
+{
+  "name": "eclass",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "version": "1.0.0",
+  "description": "A real-time web-based classroom and learning management platform.",
+  "keywords": [
+    "eclass",
+    "learning"
+  ],
+  "homepage": "https://github.com/rohailahmaddev/eclass#readme",
+  "bugs": {
+    "url": "https://github.com/rohailahmaddev/eclass/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rohailahmaddev/eclass.git"
+  },
+  "license": "ISC",
+  "author": "Rohail Ahmad",
+  "type": "module",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev:frontend": "npm run dev --workspace frontend",
+    "dev:backend": "npm run dev --workspace backend",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  }
+}
