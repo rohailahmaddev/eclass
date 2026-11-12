@@ -37,7 +37,7 @@ jobs:
           --health-retries 5
 
     env:
-      DATABASE_URL: postgresql://eclass:eclass433985@localhost:5432/eclass_db?schema=public
+      DATABASE_URL: postgresql://eclass:${POSTGRES_PASSWORD}@localhost:5432/eclass_db?schema=public
 
     steps:
       - name: Checkout repository
