@@ -17,13 +17,12 @@ permissions:
 jobs:
   quality-checks:
     name: Code Quality Checks
-
     runs-on: ubuntu-latest
 
-    # Throwaway PostgreSQL used only for this CI run
+    # Temporary PostgreSQL database for this CI run
     services:
       postgres:
-        image: postgres:16
+        image: postgres:17
         env:
           POSTGRES_USER: eclass
           POSTGRES_PASSWORD: eclass433985
@@ -31,13 +30,15 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U postgres"
+          --health-cmd "pg_isready -U eclass -d eclass_db"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
 
     env:
       DATABASE_URL: postgresql://eclass:eclass433985@localhost:5432/eclass_db?schema=public
+      PGPASSWORD: eclass433985
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
@@ -48,14 +49,12 @@ jobs:
           node-version: 24
           cache: npm
 
-      # npm ci installs exactly what package-lock.json says (reproducible builds)
       - name: Install dependencies
         run: npm ci
 
       - name: Validate Prisma schema
         run: npm exec --workspace backend -- prisma validate
 
-      # Must run before lint/typecheck/build: it generates the typed Prisma Client
       - name: Generate Prisma Client
         run: npm exec --workspace backend -- prisma generate
 
@@ -65,12 +64,19 @@ jobs:
       - name: Check backend TypeScript
         run: npm run typecheck --workspace backend
 
-      # Applies the committed migrations (backend/prisma/migrations) to the CI database
-      - name: Run database migrations
+      - name: Apply database migrations
         run: npm exec --workspace backend -- prisma migrate deploy
 
       - name: Verify users table exists
-        run: psql "$DATABASE_URL" -c '\d users'
+        run: |
+          RESULT=$(psql -h localhost -U eclass -d eclass_db -tA \
+            -c "SELECT EXISTS (
+              SELECT 1
+              FROM information_schema.tables
+              WHERE table_schema = 'public'
+              AND table_name = 'users'
+            );")
+          test "$RESULT" = "t"
 
       - name: Build frontend and backend
         run: npm run build
