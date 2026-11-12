@@ -22,7 +22,7 @@ jobs:
     # Temporary PostgreSQL database for this CI run
     services:
       postgres:
-        image: postgres:17
+        image: postgres:16
         env:
           POSTGRES_USER: eclass
           POSTGRES_PASSWORD: eclass433985
