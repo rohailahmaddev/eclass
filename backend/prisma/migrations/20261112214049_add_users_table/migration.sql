@@ -30,3 +30,16 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- CreateIndex
 CREATE INDEX "users_role_idx" ON "users"("role");
+
+CREATE OR REPLACE FUNCTION set_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER users_set_updated_at
+BEFORE UPDATE ON users
+FOR EACH ROW
+EXECUTE FUNCTION set_updated_at();
