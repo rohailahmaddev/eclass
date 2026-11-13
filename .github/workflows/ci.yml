@@ -1,0 +1,82 @@
+name: eClass CI
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: read
+
+jobs:
+  quality-checks:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+
+    # Temporary PostgreSQL database for this CI run
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: eclass
+          POSTGRES_PASSWORD: eclass433985
+          POSTGRES_DB: eclass_db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U eclass -d eclass_db"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    env:
+      DATABASE_URL: postgresql://eclass:eclass433985@localhost:5432/eclass_db?schema=public
+      PGPASSWORD: eclass433985
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate Prisma schema
+        run: npm exec --workspace backend -- prisma validate
+
+      - name: Generate Prisma Client
+        run: npm exec --workspace backend -- prisma generate
+
+      - name: Run lint
+        run: npm run lint
+
+      - name: Check backend TypeScript
+        run: npm run typecheck --workspace backend
+
+      - name: Apply database migrations
+        run: npm exec --workspace backend -- prisma migrate deploy
+
+      - name: Verify users table exists
+        run: |
+          RESULT=$(psql -h localhost -U eclass -d eclass_db -tA \
+            -c "SELECT EXISTS (
+              SELECT 1
+              FROM information_schema.tables
+              WHERE table_schema = 'public'
+              AND table_name = 'users'
+            );")
+          test "$RESULT" = "t"
+
+      - name: Build frontend and backend
+        run: npm run build
