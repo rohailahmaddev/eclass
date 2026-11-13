@@ -25,3 +25,11 @@ export const UserStatus = {
 } as const
 
 export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus]
+
+
+export const AuthTokenType = {
+  email_verification: 'email_verification',
+  password_reset: 'password_reset'
+} as const
+
+export type AuthTokenType = (typeof AuthTokenType)[keyof typeof AuthTokenType]
