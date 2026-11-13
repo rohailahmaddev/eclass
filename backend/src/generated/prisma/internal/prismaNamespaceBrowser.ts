@@ -53,7 +53,10 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   RefreshSession: 'RefreshSession',
-  AuthToken: 'AuthToken'
+  AuthToken: 'AuthToken',
+  Course: 'Course',
+  Classroom: 'Classroom',
+  ClassroomInvitation: 'ClassroomInvitation'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -117,6 +120,45 @@ export const AuthTokenScalarFieldEnum = {
 } as const
 
 export type AuthTokenScalarFieldEnum = (typeof AuthTokenScalarFieldEnum)[keyof typeof AuthTokenScalarFieldEnum]
+
+
+export const CourseScalarFieldEnum = {
+  id: 'id',
+  code: 'code',
+  title: 'title',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
+
+
+export const ClassroomScalarFieldEnum = {
+  id: 'id',
+  courseId: 'courseId',
+  name: 'name',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  deletedAt: 'deletedAt'
+} as const
+
+export type ClassroomScalarFieldEnum = (typeof ClassroomScalarFieldEnum)[keyof typeof ClassroomScalarFieldEnum]
+
+
+export const ClassroomInvitationScalarFieldEnum = {
+  id: 'id',
+  classroomId: 'classroomId',
+  email: 'email',
+  status: 'status',
+  invitedById: 'invitedById',
+  acceptedById: 'acceptedById',
+  acceptedAt: 'acceptedAt',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClassroomInvitationScalarFieldEnum = (typeof ClassroomInvitationScalarFieldEnum)[keyof typeof ClassroomInvitationScalarFieldEnum]
 
 
 export const SortOrder = {

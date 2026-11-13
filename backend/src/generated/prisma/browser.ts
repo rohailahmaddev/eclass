@@ -32,3 +32,18 @@ export type RefreshSession = Prisma.RefreshSessionModel
  * 
  */
 export type AuthToken = Prisma.AuthTokenModel
+/**
+ * Model Course
+ * 
+ */
+export type Course = Prisma.CourseModel
+/**
+ * Model Classroom
+ * 
+ */
+export type Classroom = Prisma.ClassroomModel
+/**
+ * Model ClassroomInvitation
+ * 
+ */
+export type ClassroomInvitation = Prisma.ClassroomInvitationModel

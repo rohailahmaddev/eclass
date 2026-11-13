@@ -33,3 +33,12 @@ export const AuthTokenType = {
 } as const
 
 export type AuthTokenType = (typeof AuthTokenType)[keyof typeof AuthTokenType]
+
+
+export const InvitationStatus = {
+  pending: 'pending',
+  accepted: 'accepted',
+  revoked: 'revoked'
+} as const
+
+export type InvitationStatus = (typeof InvitationStatus)[keyof typeof InvitationStatus]

@@ -290,6 +290,8 @@ export type UserWhereInput = {
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   refreshSessions?: Prisma.RefreshSessionListRelationFilter
   authTokens?: Prisma.AuthTokenListRelationFilter
+  invitationsSent?: Prisma.ClassroomInvitationListRelationFilter
+  invitationsAccepted?: Prisma.ClassroomInvitationListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -309,6 +311,8 @@ export type UserOrderByWithRelationInput = {
   deletedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   refreshSessions?: Prisma.RefreshSessionOrderByRelationAggregateInput
   authTokens?: Prisma.AuthTokenOrderByRelationAggregateInput
+  invitationsSent?: Prisma.ClassroomInvitationOrderByRelationAggregateInput
+  invitationsAccepted?: Prisma.ClassroomInvitationOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -331,6 +335,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   deletedAt?: Prisma.DateTimeNullableFilter<"User"> | Date | string | null
   refreshSessions?: Prisma.RefreshSessionListRelationFilter
   authTokens?: Prisma.AuthTokenListRelationFilter
+  invitationsSent?: Prisma.ClassroomInvitationListRelationFilter
+  invitationsAccepted?: Prisma.ClassroomInvitationListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -392,6 +398,8 @@ export type UserCreateInput = {
   deletedAt?: Date | string | null
   refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
   authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+  invitationsSent?: Prisma.ClassroomInvitationCreateNestedManyWithoutInvitedByInput
+  invitationsAccepted?: Prisma.ClassroomInvitationCreateNestedManyWithoutAcceptedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -411,6 +419,8 @@ export type UserUncheckedCreateInput = {
   deletedAt?: Date | string | null
   refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
   authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+  invitationsSent?: Prisma.ClassroomInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUncheckedCreateNestedManyWithoutAcceptedByInput
 }
 
 export type UserUpdateInput = {
@@ -430,6 +440,8 @@ export type UserUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
   authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+  invitationsSent?: Prisma.ClassroomInvitationUpdateManyWithoutInvitedByNestedInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUpdateManyWithoutAcceptedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -449,6 +461,8 @@ export type UserUncheckedUpdateInput = {
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
   authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+  invitationsSent?: Prisma.ClassroomInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -566,6 +580,11 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -626,6 +645,36 @@ export type UserUpdateOneRequiredWithoutAuthTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuthTokensInput, Prisma.UserUpdateWithoutAuthTokensInput>, Prisma.UserUncheckedUpdateWithoutAuthTokensInput>
 }
 
+export type UserCreateNestedOneWithoutInvitationsSentInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutInvitationsSentInput, Prisma.UserUncheckedCreateWithoutInvitationsSentInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInvitationsSentInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutInvitationsAcceptedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutInvitationsAcceptedInput, Prisma.UserUncheckedCreateWithoutInvitationsAcceptedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInvitationsAcceptedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutInvitationsSentNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutInvitationsSentInput, Prisma.UserUncheckedCreateWithoutInvitationsSentInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInvitationsSentInput
+  upsert?: Prisma.UserUpsertWithoutInvitationsSentInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInvitationsSentInput, Prisma.UserUpdateWithoutInvitationsSentInput>, Prisma.UserUncheckedUpdateWithoutInvitationsSentInput>
+}
+
+export type UserUpdateOneWithoutInvitationsAcceptedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutInvitationsAcceptedInput, Prisma.UserUncheckedCreateWithoutInvitationsAcceptedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutInvitationsAcceptedInput
+  upsert?: Prisma.UserUpsertWithoutInvitationsAcceptedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutInvitationsAcceptedInput, Prisma.UserUpdateWithoutInvitationsAcceptedInput>, Prisma.UserUncheckedUpdateWithoutInvitationsAcceptedInput>
+}
+
 export type UserCreateWithoutRefreshSessionsInput = {
   id?: string
   email: string
@@ -642,6 +691,8 @@ export type UserCreateWithoutRefreshSessionsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+  invitationsSent?: Prisma.ClassroomInvitationCreateNestedManyWithoutInvitedByInput
+  invitationsAccepted?: Prisma.ClassroomInvitationCreateNestedManyWithoutAcceptedByInput
 }
 
 export type UserUncheckedCreateWithoutRefreshSessionsInput = {
@@ -660,6 +711,8 @@ export type UserUncheckedCreateWithoutRefreshSessionsInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+  invitationsSent?: Prisma.ClassroomInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUncheckedCreateNestedManyWithoutAcceptedByInput
 }
 
 export type UserCreateOrConnectWithoutRefreshSessionsInput = {
@@ -694,6 +747,8 @@ export type UserUpdateWithoutRefreshSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+  invitationsSent?: Prisma.ClassroomInvitationUpdateManyWithoutInvitedByNestedInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUpdateManyWithoutAcceptedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshSessionsInput = {
@@ -712,6 +767,8 @@ export type UserUncheckedUpdateWithoutRefreshSessionsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+  invitationsSent?: Prisma.ClassroomInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
 }
 
 export type UserCreateWithoutAuthTokensInput = {
@@ -730,6 +787,8 @@ export type UserCreateWithoutAuthTokensInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
+  invitationsSent?: Prisma.ClassroomInvitationCreateNestedManyWithoutInvitedByInput
+  invitationsAccepted?: Prisma.ClassroomInvitationCreateNestedManyWithoutAcceptedByInput
 }
 
 export type UserUncheckedCreateWithoutAuthTokensInput = {
@@ -748,6 +807,8 @@ export type UserUncheckedCreateWithoutAuthTokensInput = {
   updatedAt?: Date | string
   deletedAt?: Date | string | null
   refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
+  invitationsSent?: Prisma.ClassroomInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUncheckedCreateNestedManyWithoutAcceptedByInput
 }
 
 export type UserCreateOrConnectWithoutAuthTokensInput = {
@@ -782,6 +843,8 @@ export type UserUpdateWithoutAuthTokensInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
+  invitationsSent?: Prisma.ClassroomInvitationUpdateManyWithoutInvitedByNestedInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUpdateManyWithoutAcceptedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuthTokensInput = {
@@ -800,6 +863,200 @@ export type UserUncheckedUpdateWithoutAuthTokensInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
+  invitationsSent?: Prisma.ClassroomInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+}
+
+export type UserCreateWithoutInvitationsSentInput = {
+  id?: string
+  email: string
+  password: string
+  fullName: string
+  role: $Enums.Role
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  avatarUrl?: string | null
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
+  authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+  invitationsAccepted?: Prisma.ClassroomInvitationCreateNestedManyWithoutAcceptedByInput
+}
+
+export type UserUncheckedCreateWithoutInvitationsSentInput = {
+  id?: string
+  email: string
+  password: string
+  fullName: string
+  role: $Enums.Role
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  avatarUrl?: string | null
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
+  authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUncheckedCreateNestedManyWithoutAcceptedByInput
+}
+
+export type UserCreateOrConnectWithoutInvitationsSentInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutInvitationsSentInput, Prisma.UserUncheckedCreateWithoutInvitationsSentInput>
+}
+
+export type UserCreateWithoutInvitationsAcceptedInput = {
+  id?: string
+  email: string
+  password: string
+  fullName: string
+  role: $Enums.Role
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  avatarUrl?: string | null
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
+  authTokens?: Prisma.AuthTokenCreateNestedManyWithoutUserInput
+  invitationsSent?: Prisma.ClassroomInvitationCreateNestedManyWithoutInvitedByInput
+}
+
+export type UserUncheckedCreateWithoutInvitationsAcceptedInput = {
+  id?: string
+  email: string
+  password: string
+  fullName: string
+  role: $Enums.Role
+  status?: $Enums.UserStatus
+  emailVerifiedAt?: Date | string | null
+  avatarUrl?: string | null
+  failedLoginAttempts?: number
+  lockedUntil?: Date | string | null
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  deletedAt?: Date | string | null
+  refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
+  authTokens?: Prisma.AuthTokenUncheckedCreateNestedManyWithoutUserInput
+  invitationsSent?: Prisma.ClassroomInvitationUncheckedCreateNestedManyWithoutInvitedByInput
+}
+
+export type UserCreateOrConnectWithoutInvitationsAcceptedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutInvitationsAcceptedInput, Prisma.UserUncheckedCreateWithoutInvitationsAcceptedInput>
+}
+
+export type UserUpsertWithoutInvitationsSentInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutInvitationsSentInput, Prisma.UserUncheckedUpdateWithoutInvitationsSentInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutInvitationsSentInput, Prisma.UserUncheckedCreateWithoutInvitationsSentInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutInvitationsSentInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutInvitationsSentInput, Prisma.UserUncheckedUpdateWithoutInvitationsSentInput>
+}
+
+export type UserUpdateWithoutInvitationsSentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
+  authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUpdateManyWithoutAcceptedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutInvitationsSentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
+  authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+  invitationsAccepted?: Prisma.ClassroomInvitationUncheckedUpdateManyWithoutAcceptedByNestedInput
+}
+
+export type UserUpsertWithoutInvitationsAcceptedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutInvitationsAcceptedInput, Prisma.UserUncheckedUpdateWithoutInvitationsAcceptedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutInvitationsAcceptedInput, Prisma.UserUncheckedCreateWithoutInvitationsAcceptedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutInvitationsAcceptedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutInvitationsAcceptedInput, Prisma.UserUncheckedUpdateWithoutInvitationsAcceptedInput>
+}
+
+export type UserUpdateWithoutInvitationsAcceptedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
+  authTokens?: Prisma.AuthTokenUpdateManyWithoutUserNestedInput
+  invitationsSent?: Prisma.ClassroomInvitationUpdateManyWithoutInvitedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutInvitationsAcceptedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  failedLoginAttempts?: Prisma.IntFieldUpdateOperationsInput | number
+  lockedUntil?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  deletedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
+  authTokens?: Prisma.AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+  invitationsSent?: Prisma.ClassroomInvitationUncheckedUpdateManyWithoutInvitedByNestedInput
 }
 
 
@@ -810,11 +1067,15 @@ export type UserUncheckedUpdateWithoutAuthTokensInput = {
 export type UserCountOutputType = {
   refreshSessions: number
   authTokens: number
+  invitationsSent: number
+  invitationsAccepted: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   refreshSessions?: boolean | UserCountOutputTypeCountRefreshSessionsArgs
   authTokens?: boolean | UserCountOutputTypeCountAuthTokensArgs
+  invitationsSent?: boolean | UserCountOutputTypeCountInvitationsSentArgs
+  invitationsAccepted?: boolean | UserCountOutputTypeCountInvitationsAcceptedArgs
 }
 
 /**
@@ -841,6 +1102,20 @@ export type UserCountOutputTypeCountAuthTokensArgs<ExtArgs extends runtime.Types
   where?: Prisma.AuthTokenWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountInvitationsSentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClassroomInvitationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountInvitationsAcceptedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClassroomInvitationWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -859,6 +1134,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   deletedAt?: boolean
   refreshSessions?: boolean | Prisma.User$refreshSessionsArgs<ExtArgs>
   authTokens?: boolean | Prisma.User$authTokensArgs<ExtArgs>
+  invitationsSent?: boolean | Prisma.User$invitationsSentArgs<ExtArgs>
+  invitationsAccepted?: boolean | Prisma.User$invitationsAcceptedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -917,6 +1194,8 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   refreshSessions?: boolean | Prisma.User$refreshSessionsArgs<ExtArgs>
   authTokens?: boolean | Prisma.User$authTokensArgs<ExtArgs>
+  invitationsSent?: boolean | Prisma.User$invitationsSentArgs<ExtArgs>
+  invitationsAccepted?: boolean | Prisma.User$invitationsAcceptedArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -927,6 +1206,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     refreshSessions: Prisma.$RefreshSessionPayload<ExtArgs>[]
     authTokens: Prisma.$AuthTokenPayload<ExtArgs>[]
+    invitationsSent: Prisma.$ClassroomInvitationPayload<ExtArgs>[]
+    invitationsAccepted: Prisma.$ClassroomInvitationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1339,6 +1620,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   refreshSessions<T extends Prisma.User$refreshSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$refreshSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RefreshSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   authTokens<T extends Prisma.User$authTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$authTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  invitationsSent<T extends Prisma.User$invitationsSentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$invitationsSentArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassroomInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  invitationsAccepted<T extends Prisma.User$invitationsAcceptedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$invitationsAcceptedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClassroomInvitationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1820,6 +2103,54 @@ export type User$authTokensArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.AuthTokenScalarFieldEnum | Prisma.AuthTokenScalarFieldEnum[]
+}
+
+/**
+ * User.invitationsSent
+ */
+export type User$invitationsSentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClassroomInvitation
+   */
+  select?: Prisma.ClassroomInvitationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClassroomInvitation
+   */
+  omit?: Prisma.ClassroomInvitationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassroomInvitationInclude<ExtArgs> | null
+  where?: Prisma.ClassroomInvitationWhereInput
+  orderBy?: Prisma.ClassroomInvitationOrderByWithRelationInput | Prisma.ClassroomInvitationOrderByWithRelationInput[]
+  cursor?: Prisma.ClassroomInvitationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClassroomInvitationScalarFieldEnum | Prisma.ClassroomInvitationScalarFieldEnum[]
+}
+
+/**
+ * User.invitationsAccepted
+ */
+export type User$invitationsAcceptedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClassroomInvitation
+   */
+  select?: Prisma.ClassroomInvitationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClassroomInvitation
+   */
+  omit?: Prisma.ClassroomInvitationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClassroomInvitationInclude<ExtArgs> | null
+  where?: Prisma.ClassroomInvitationWhereInput
+  orderBy?: Prisma.ClassroomInvitationOrderByWithRelationInput | Prisma.ClassroomInvitationOrderByWithRelationInput[]
+  cursor?: Prisma.ClassroomInvitationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClassroomInvitationScalarFieldEnum | Prisma.ClassroomInvitationScalarFieldEnum[]
 }
 
 /**

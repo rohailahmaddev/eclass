@@ -47,6 +47,8 @@ model User {
 
   refreshSessions     RefreshSession[]
   authTokens          AuthToken[]
+  invitationsSent     ClassroomInvitation[] @relation("InvitedBy")
+  invitationsAccepted     ClassroomInvitation[] @relation("AcceptedBy")
 
   @@index([role])
   @@map("users")
@@ -93,3 +95,66 @@ model AuthToken {
   @@index([expiresAt])
   @@map("auth_tokens")
 }
+
+// ---------------------------------------------------------------------------
+// Classroom access control
+// ---------------------------------------------------------------------------
+
+enum InvitationStatus {
+  pending
+  accepted
+  revoked
+}
+
+model Course {
+  id        String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code      String      @unique @db.VarChar(30)
+  title     String      @db.VarChar(150)
+  createdAt DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  classrooms Classroom[]
+
+  @@map("courses")
+}
+
+model Classroom {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  courseId  String    @map("course_id") @db.Uuid
+  name      String    @db.VarChar(100)                       // e.g. "Section A"
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+  course      Course                @relation(fields: [courseId], references: [id])
+  invitations ClassroomInvitation[]
+
+  @@index([courseId])
+  @@map("classrooms")
+}
+
+model ClassroomInvitation {
+  id           String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  classroomId  String           @map("classroom_id") @db.Uuid
+
+  email        String           @db.Citext                   // case-insensitive, like users.email
+  status       InvitationStatus @default(pending)
+
+  invitedById  String           @map("invited_by_id") @db.Uuid   // the teacher / admin who added it
+  acceptedById String?          @map("accepted_by_id") @db.Uuid  // the student account that claimed it
+  acceptedAt   DateTime?        @map("accepted_at") @db.Timestamptz(6)
+  expiresAt    DateTime?        @map("expires_at") @db.Timestamptz(6) // NULL = never expires
+
+  createdAt    DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  classroom    Classroom        @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+  invitedBy    User             @relation("InvitedBy", fields: [invitedById], references: [id])
+  acceptedBy   User?            @relation("AcceptedBy", fields: [acceptedById], references: [id], onDelete: SetNull)
+
+  @@unique([classroomId, email])        // one invitation per email per classroom
+  @@index([email, status])              // registration gate: "does this email have a pending invite?"
+  @@index([classroomId, status])        // teacher's list of pending / accepted students
+  @@map("classroom_invitations")
+}
+

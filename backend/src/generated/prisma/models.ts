@@ -11,4 +11,7 @@
 export type * from './models/User.js'
 export type * from './models/RefreshSession.js'
 export type * from './models/AuthToken.js'
+export type * from './models/Course.js'
+export type * from './models/Classroom.js'
+export type * from './models/ClassroomInvitation.js'
 export type * from './commonInputTypes.js'
