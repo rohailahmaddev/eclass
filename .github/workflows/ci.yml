@@ -37,7 +37,7 @@ jobs:
 
     env:
       DATABASE_URL: postgresql://eclass:eclass433985@localhost:5432/eclass_db?schema=public
-      PGPASSWORD: eclass433985
+      POSTGRES_PASSWORD: eclass433985
 
     steps:
       - name: Checkout repository
