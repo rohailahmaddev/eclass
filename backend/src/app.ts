@@ -1,7 +1,10 @@
 import express from "express";
 import v1Routes from "./routes/v1/index.js"
+import { httpLogger } from "./logger/httpLogger.js";
 
 const app = express();
+
+app.use(httpLogger);
 
 app.disable("x-powered-by");
 

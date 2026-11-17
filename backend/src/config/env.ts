@@ -12,6 +12,15 @@ const envSchema = z.object({
     .enum(["development", "production", "test"])
     .default("development"),
 
+  LOG_LEVEL: z
+    .enum(["debug", "warn", "silent"])
+    .default("debug"),
+
+  SERVICE_NAME: z
+    .string()
+    .trim()
+    .min(2,"Atleast two characters."),
+
   PORT: z
     .coerce
     .number()
