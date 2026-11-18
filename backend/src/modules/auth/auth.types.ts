@@ -1,3 +1,5 @@
+import { PrismaClient } from "@prisma/client/extension"
+
 type userRole = "ADMIN" | "TEACHER" | "STUDENT"
 
 export type registerUserInput = {
@@ -5,8 +7,16 @@ export type registerUserInput = {
   email : string,
   password : string,
   role : Exclude<userRole,"ADMIN">,
-  file : File | null
+  fileBuffer : Buffer | null
 }
+
+export type CreateUserInput = {
+  fullName: string;
+  email: string;
+  passwordHash: string;
+  role: "TEACHER" | "STUDENT";
+  avatarUrl?: string | null;
+};
 
 export type user = {
   fullName : string,
@@ -27,9 +37,18 @@ export type loginInput = {
 }
 
 export type publicUser = {
-  id : number,
+  id : string,
   fullName : string,
   email : string,
   role : userRole
 }
 
+export type AuthTokenType = "email_verification"|"password_reset";
+export type AuthDbClient = Pick<PrismaClient, "user" | "authToken">;
+
+export type createAuthToken = {
+  userId:string,
+  type:AuthTokenType,
+  hashedToken:string,
+  tokenExpiry:Date
+}
