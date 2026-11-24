@@ -7,7 +7,7 @@ export type registerUserInput = {
   email : string,
   password : string,
   role : Exclude<userRole,"ADMIN">,
-  fileBuffer : Buffer | null
+  fileBuffer : Buffer | undefined
 }
 
 export type CreateUserInput = {
