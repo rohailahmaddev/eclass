@@ -121,6 +121,21 @@ const envSchema = z.object({
   CLOUDINARY_API_SECRET: z
     .string()
     .min(1, "CLOUDINARY_API_SECRET is required"),
+
+  //Resend Email
+  RESEND_API_KEY: z
+    .string()
+    .min(1, "CLOUDINARY_API_SECRET is required"),
+
+  EMAIL_FROM:z
+    .string()
+    .min(1, 'EMAIL_FROM is required'),
+
+  FRONTEND_URL: z
+    .string()
+    .url('FRONTEND_URL must be a valid URL (e.g., https://frontend.vercel.app)'),
+
+  APP_NAME: z.string().min(1, 'APP_NAME is required').default('eClass'),
 });
 
 const parsed = envSchema.safeParse(process.env);
