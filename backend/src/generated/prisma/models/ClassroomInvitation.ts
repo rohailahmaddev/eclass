@@ -29,6 +29,7 @@ export type ClassroomInvitationMinAggregateOutputType = {
   classroomId: string | null
   email: string | null
   status: $Enums.InvitationStatus | null
+  tokenHash: string | null
   invitedById: string | null
   acceptedById: string | null
   acceptedAt: Date | null
@@ -42,6 +43,7 @@ export type ClassroomInvitationMaxAggregateOutputType = {
   classroomId: string | null
   email: string | null
   status: $Enums.InvitationStatus | null
+  tokenHash: string | null
   invitedById: string | null
   acceptedById: string | null
   acceptedAt: Date | null
@@ -55,6 +57,7 @@ export type ClassroomInvitationCountAggregateOutputType = {
   classroomId: number
   email: number
   status: number
+  tokenHash: number
   invitedById: number
   acceptedById: number
   acceptedAt: number
@@ -70,6 +73,7 @@ export type ClassroomInvitationMinAggregateInputType = {
   classroomId?: true
   email?: true
   status?: true
+  tokenHash?: true
   invitedById?: true
   acceptedById?: true
   acceptedAt?: true
@@ -83,6 +87,7 @@ export type ClassroomInvitationMaxAggregateInputType = {
   classroomId?: true
   email?: true
   status?: true
+  tokenHash?: true
   invitedById?: true
   acceptedById?: true
   acceptedAt?: true
@@ -96,6 +101,7 @@ export type ClassroomInvitationCountAggregateInputType = {
   classroomId?: true
   email?: true
   status?: true
+  tokenHash?: true
   invitedById?: true
   acceptedById?: true
   acceptedAt?: true
@@ -182,6 +188,7 @@ export type ClassroomInvitationGroupByOutputType = {
   classroomId: string
   email: string
   status: $Enums.InvitationStatus
+  tokenHash: string
   invitedById: string
   acceptedById: string | null
   acceptedAt: Date | null
@@ -216,6 +223,7 @@ export type ClassroomInvitationWhereInput = {
   classroomId?: Prisma.UuidFilter<"ClassroomInvitation"> | string
   email?: Prisma.StringFilter<"ClassroomInvitation"> | string
   status?: Prisma.EnumInvitationStatusFilter<"ClassroomInvitation"> | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFilter<"ClassroomInvitation"> | string
   invitedById?: Prisma.UuidFilter<"ClassroomInvitation"> | string
   acceptedById?: Prisma.UuidNullableFilter<"ClassroomInvitation"> | string | null
   acceptedAt?: Prisma.DateTimeNullableFilter<"ClassroomInvitation"> | Date | string | null
@@ -232,6 +240,7 @@ export type ClassroomInvitationOrderByWithRelationInput = {
   classroomId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  tokenHash?: Prisma.SortOrder
   invitedById?: Prisma.SortOrder
   acceptedById?: Prisma.SortOrderInput | Prisma.SortOrder
   acceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -245,6 +254,7 @@ export type ClassroomInvitationOrderByWithRelationInput = {
 
 export type ClassroomInvitationWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  tokenHash?: string
   classroomId_email?: Prisma.ClassroomInvitationClassroomIdEmailCompoundUniqueInput
   AND?: Prisma.ClassroomInvitationWhereInput | Prisma.ClassroomInvitationWhereInput[]
   OR?: Prisma.ClassroomInvitationWhereInput[]
@@ -261,13 +271,14 @@ export type ClassroomInvitationWhereUniqueInput = Prisma.AtLeast<{
   classroom?: Prisma.XOR<Prisma.ClassroomScalarRelationFilter, Prisma.ClassroomWhereInput>
   invitedBy?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   acceptedBy?: Prisma.XOR<Prisma.UserNullableScalarRelationFilter, Prisma.UserWhereInput> | null
-}, "id" | "classroomId_email">
+}, "id" | "tokenHash" | "classroomId_email">
 
 export type ClassroomInvitationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   classroomId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  tokenHash?: Prisma.SortOrder
   invitedById?: Prisma.SortOrder
   acceptedById?: Prisma.SortOrderInput | Prisma.SortOrder
   acceptedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -287,6 +298,7 @@ export type ClassroomInvitationScalarWhereWithAggregatesInput = {
   classroomId?: Prisma.UuidWithAggregatesFilter<"ClassroomInvitation"> | string
   email?: Prisma.StringWithAggregatesFilter<"ClassroomInvitation"> | string
   status?: Prisma.EnumInvitationStatusWithAggregatesFilter<"ClassroomInvitation"> | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringWithAggregatesFilter<"ClassroomInvitation"> | string
   invitedById?: Prisma.UuidWithAggregatesFilter<"ClassroomInvitation"> | string
   acceptedById?: Prisma.UuidNullableWithAggregatesFilter<"ClassroomInvitation"> | string | null
   acceptedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ClassroomInvitation"> | Date | string | null
@@ -299,6 +311,7 @@ export type ClassroomInvitationCreateInput = {
   id?: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   acceptedAt?: Date | string | null
   expiresAt?: Date | string | null
   createdAt?: Date | string
@@ -313,6 +326,7 @@ export type ClassroomInvitationUncheckedCreateInput = {
   classroomId: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   invitedById: string
   acceptedById?: string | null
   acceptedAt?: Date | string | null
@@ -325,6 +339,7 @@ export type ClassroomInvitationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -339,6 +354,7 @@ export type ClassroomInvitationUncheckedUpdateInput = {
   classroomId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   invitedById?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -352,6 +368,7 @@ export type ClassroomInvitationCreateManyInput = {
   classroomId: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   invitedById: string
   acceptedById?: string | null
   acceptedAt?: Date | string | null
@@ -364,6 +381,7 @@ export type ClassroomInvitationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -375,6 +393,7 @@ export type ClassroomInvitationUncheckedUpdateManyInput = {
   classroomId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   invitedById?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -403,6 +422,7 @@ export type ClassroomInvitationCountOrderByAggregateInput = {
   classroomId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  tokenHash?: Prisma.SortOrder
   invitedById?: Prisma.SortOrder
   acceptedById?: Prisma.SortOrder
   acceptedAt?: Prisma.SortOrder
@@ -416,6 +436,7 @@ export type ClassroomInvitationMaxOrderByAggregateInput = {
   classroomId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  tokenHash?: Prisma.SortOrder
   invitedById?: Prisma.SortOrder
   acceptedById?: Prisma.SortOrder
   acceptedAt?: Prisma.SortOrder
@@ -429,6 +450,7 @@ export type ClassroomInvitationMinOrderByAggregateInput = {
   classroomId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  tokenHash?: Prisma.SortOrder
   invitedById?: Prisma.SortOrder
   acceptedById?: Prisma.SortOrder
   acceptedAt?: Prisma.SortOrder
@@ -571,6 +593,7 @@ export type ClassroomInvitationCreateWithoutInvitedByInput = {
   id?: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   acceptedAt?: Date | string | null
   expiresAt?: Date | string | null
   createdAt?: Date | string
@@ -584,6 +607,7 @@ export type ClassroomInvitationUncheckedCreateWithoutInvitedByInput = {
   classroomId: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   acceptedById?: string | null
   acceptedAt?: Date | string | null
   expiresAt?: Date | string | null
@@ -605,6 +629,7 @@ export type ClassroomInvitationCreateWithoutAcceptedByInput = {
   id?: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   acceptedAt?: Date | string | null
   expiresAt?: Date | string | null
   createdAt?: Date | string
@@ -618,6 +643,7 @@ export type ClassroomInvitationUncheckedCreateWithoutAcceptedByInput = {
   classroomId: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   invitedById: string
   acceptedAt?: Date | string | null
   expiresAt?: Date | string | null
@@ -659,6 +685,7 @@ export type ClassroomInvitationScalarWhereInput = {
   classroomId?: Prisma.UuidFilter<"ClassroomInvitation"> | string
   email?: Prisma.StringFilter<"ClassroomInvitation"> | string
   status?: Prisma.EnumInvitationStatusFilter<"ClassroomInvitation"> | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFilter<"ClassroomInvitation"> | string
   invitedById?: Prisma.UuidFilter<"ClassroomInvitation"> | string
   acceptedById?: Prisma.UuidNullableFilter<"ClassroomInvitation"> | string | null
   acceptedAt?: Prisma.DateTimeNullableFilter<"ClassroomInvitation"> | Date | string | null
@@ -687,6 +714,7 @@ export type ClassroomInvitationCreateWithoutClassroomInput = {
   id?: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   acceptedAt?: Date | string | null
   expiresAt?: Date | string | null
   createdAt?: Date | string
@@ -699,6 +727,7 @@ export type ClassroomInvitationUncheckedCreateWithoutClassroomInput = {
   id?: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   invitedById: string
   acceptedById?: string | null
   acceptedAt?: Date | string | null
@@ -738,6 +767,7 @@ export type ClassroomInvitationCreateManyInvitedByInput = {
   classroomId: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   acceptedById?: string | null
   acceptedAt?: Date | string | null
   expiresAt?: Date | string | null
@@ -750,6 +780,7 @@ export type ClassroomInvitationCreateManyAcceptedByInput = {
   classroomId: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   invitedById: string
   acceptedAt?: Date | string | null
   expiresAt?: Date | string | null
@@ -761,6 +792,7 @@ export type ClassroomInvitationUpdateWithoutInvitedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -774,6 +806,7 @@ export type ClassroomInvitationUncheckedUpdateWithoutInvitedByInput = {
   classroomId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -786,6 +819,7 @@ export type ClassroomInvitationUncheckedUpdateManyWithoutInvitedByInput = {
   classroomId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -797,6 +831,7 @@ export type ClassroomInvitationUpdateWithoutAcceptedByInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -810,6 +845,7 @@ export type ClassroomInvitationUncheckedUpdateWithoutAcceptedByInput = {
   classroomId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   invitedById?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -822,6 +858,7 @@ export type ClassroomInvitationUncheckedUpdateManyWithoutAcceptedByInput = {
   classroomId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   invitedById?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -833,6 +870,7 @@ export type ClassroomInvitationCreateManyClassroomInput = {
   id?: string
   email: string
   status?: $Enums.InvitationStatus
+  tokenHash: string
   invitedById: string
   acceptedById?: string | null
   acceptedAt?: Date | string | null
@@ -845,6 +883,7 @@ export type ClassroomInvitationUpdateWithoutClassroomInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -857,6 +896,7 @@ export type ClassroomInvitationUncheckedUpdateWithoutClassroomInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   invitedById?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -869,6 +909,7 @@ export type ClassroomInvitationUncheckedUpdateManyWithoutClassroomInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumInvitationStatusFieldUpdateOperationsInput | $Enums.InvitationStatus
+  tokenHash?: Prisma.StringFieldUpdateOperationsInput | string
   invitedById?: Prisma.StringFieldUpdateOperationsInput | string
   acceptedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   acceptedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -884,6 +925,7 @@ export type ClassroomInvitationSelect<ExtArgs extends runtime.Types.Extensions.I
   classroomId?: boolean
   email?: boolean
   status?: boolean
+  tokenHash?: boolean
   invitedById?: boolean
   acceptedById?: boolean
   acceptedAt?: boolean
@@ -900,6 +942,7 @@ export type ClassroomInvitationSelectCreateManyAndReturn<ExtArgs extends runtime
   classroomId?: boolean
   email?: boolean
   status?: boolean
+  tokenHash?: boolean
   invitedById?: boolean
   acceptedById?: boolean
   acceptedAt?: boolean
@@ -916,6 +959,7 @@ export type ClassroomInvitationSelectUpdateManyAndReturn<ExtArgs extends runtime
   classroomId?: boolean
   email?: boolean
   status?: boolean
+  tokenHash?: boolean
   invitedById?: boolean
   acceptedById?: boolean
   acceptedAt?: boolean
@@ -932,6 +976,7 @@ export type ClassroomInvitationSelectScalar = {
   classroomId?: boolean
   email?: boolean
   status?: boolean
+  tokenHash?: boolean
   invitedById?: boolean
   acceptedById?: boolean
   acceptedAt?: boolean
@@ -940,7 +985,7 @@ export type ClassroomInvitationSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ClassroomInvitationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "classroomId" | "email" | "status" | "invitedById" | "acceptedById" | "acceptedAt" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["classroomInvitation"]>
+export type ClassroomInvitationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "classroomId" | "email" | "status" | "tokenHash" | "invitedById" | "acceptedById" | "acceptedAt" | "expiresAt" | "createdAt" | "updatedAt", ExtArgs["result"]["classroomInvitation"]>
 export type ClassroomInvitationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   classroom?: boolean | Prisma.ClassroomDefaultArgs<ExtArgs>
   invitedBy?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -969,6 +1014,7 @@ export type $ClassroomInvitationPayload<ExtArgs extends runtime.Types.Extensions
     classroomId: string
     email: string
     status: $Enums.InvitationStatus
+    tokenHash: string
     invitedById: string
     acceptedById: string | null
     acceptedAt: Date | null
@@ -1405,6 +1451,7 @@ export interface ClassroomInvitationFieldRefs {
   readonly classroomId: Prisma.FieldRef<"ClassroomInvitation", 'String'>
   readonly email: Prisma.FieldRef<"ClassroomInvitation", 'String'>
   readonly status: Prisma.FieldRef<"ClassroomInvitation", 'InvitationStatus'>
+  readonly tokenHash: Prisma.FieldRef<"ClassroomInvitation", 'String'>
   readonly invitedById: Prisma.FieldRef<"ClassroomInvitation", 'String'>
   readonly acceptedById: Prisma.FieldRef<"ClassroomInvitation", 'String'>
   readonly acceptedAt: Prisma.FieldRef<"ClassroomInvitation", 'DateTime'>

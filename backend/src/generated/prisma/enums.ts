@@ -35,6 +35,52 @@ export const AuthTokenType = {
 export type AuthTokenType = (typeof AuthTokenType)[keyof typeof AuthTokenType]
 
 
+export const SessionStatus = {
+  scheduled: 'scheduled',
+  live: 'live',
+  ended: 'ended'
+} as const
+
+export type SessionStatus = (typeof SessionStatus)[keyof typeof SessionStatus]
+
+
+export const EnrollmentStatus = {
+  active: 'active',
+  suspended: 'suspended',
+  removed: 'removed'
+} as const
+
+export type EnrollmentStatus = (typeof EnrollmentStatus)[keyof typeof EnrollmentStatus]
+
+
+export const ClassroomMemberRole = {
+  student: 'student',
+  host: 'host',
+  manager: 'manager'
+} as const
+
+export type ClassroomMemberRole = (typeof ClassroomMemberRole)[keyof typeof ClassroomMemberRole]
+
+
+export const ParticipantRole = {
+  teacher: 'teacher',
+  host: 'host',
+  manager: 'manager',
+  student: 'student'
+} as const
+
+export type ParticipantRole = (typeof ParticipantRole)[keyof typeof ParticipantRole]
+
+
+export const SessionEndReason = {
+  host_ended: 'host_ended',
+  all_left: 'all_left',
+  system: 'system'
+} as const
+
+export type SessionEndReason = (typeof SessionEndReason)[keyof typeof SessionEndReason]
+
+
 export const InvitationStatus = {
   pending: 'pending',
   accepted: 'accepted',

@@ -57,11 +57,6 @@ export type RefreshSession = Prisma.RefreshSessionModel
  */
 export type AuthToken = Prisma.AuthTokenModel
 /**
- * Model Course
- * 
- */
-export type Course = Prisma.CourseModel
-/**
  * Model Classroom
  * 
  */
@@ -71,3 +66,18 @@ export type Classroom = Prisma.ClassroomModel
  * 
  */
 export type ClassroomInvitation = Prisma.ClassroomInvitationModel
+/**
+ * Model Enrollment
+ * 
+ */
+export type Enrollment = Prisma.EnrollmentModel
+/**
+ * Model LiveSession
+ * 
+ */
+export type LiveSession = Prisma.LiveSessionModel
+/**
+ * Model LiveSessionParticipant
+ * 
+ */
+export type LiveSessionParticipant = Prisma.LiveSessionParticipantModel

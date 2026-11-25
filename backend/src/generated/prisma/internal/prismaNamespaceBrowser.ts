@@ -54,9 +54,11 @@ export const ModelName = {
   User: 'User',
   RefreshSession: 'RefreshSession',
   AuthToken: 'AuthToken',
-  Course: 'Course',
   Classroom: 'Classroom',
-  ClassroomInvitation: 'ClassroomInvitation'
+  ClassroomInvitation: 'ClassroomInvitation',
+  Enrollment: 'Enrollment',
+  LiveSession: 'LiveSession',
+  LiveSessionParticipant: 'LiveSessionParticipant'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,7 +80,7 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
-  password: 'password',
+  passwordHash: 'passwordHash',
   fullName: 'fullName',
   role: 'role',
   status: 'status',
@@ -122,21 +124,12 @@ export const AuthTokenScalarFieldEnum = {
 export type AuthTokenScalarFieldEnum = (typeof AuthTokenScalarFieldEnum)[keyof typeof AuthTokenScalarFieldEnum]
 
 
-export const CourseScalarFieldEnum = {
-  id: 'id',
-  code: 'code',
-  title: 'title',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
-
-
 export const ClassroomScalarFieldEnum = {
   id: 'id',
-  courseId: 'courseId',
-  name: 'name',
+  ownerId: 'ownerId',
+  title: 'title',
+  description: 'description',
+  scheduleInfo: 'scheduleInfo',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   deletedAt: 'deletedAt'
@@ -150,6 +143,7 @@ export const ClassroomInvitationScalarFieldEnum = {
   classroomId: 'classroomId',
   email: 'email',
   status: 'status',
+  tokenHash: 'tokenHash',
   invitedById: 'invitedById',
   acceptedById: 'acceptedById',
   acceptedAt: 'acceptedAt',
@@ -159,6 +153,53 @@ export const ClassroomInvitationScalarFieldEnum = {
 } as const
 
 export type ClassroomInvitationScalarFieldEnum = (typeof ClassroomInvitationScalarFieldEnum)[keyof typeof ClassroomInvitationScalarFieldEnum]
+
+
+export const EnrollmentScalarFieldEnum = {
+  id: 'id',
+  classroomId: 'classroomId',
+  studentId: 'studentId',
+  role: 'role',
+  status: 'status',
+  enrolledAt: 'enrolledAt',
+  updatedAt: 'updatedAt',
+  removedAt: 'removedAt',
+  roleChangedById: 'roleChangedById',
+  roleChangedAt: 'roleChangedAt'
+} as const
+
+export type EnrollmentScalarFieldEnum = (typeof EnrollmentScalarFieldEnum)[keyof typeof EnrollmentScalarFieldEnum]
+
+
+export const LiveSessionScalarFieldEnum = {
+  id: 'id',
+  classroomId: 'classroomId',
+  title: 'title',
+  status: 'status',
+  scheduledStart: 'scheduledStart',
+  startedAt: 'startedAt',
+  endedAt: 'endedAt',
+  startedById: 'startedById',
+  endedById: 'endedById',
+  endReason: 'endReason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LiveSessionScalarFieldEnum = (typeof LiveSessionScalarFieldEnum)[keyof typeof LiveSessionScalarFieldEnum]
+
+
+export const LiveSessionParticipantScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  userId: 'userId',
+  roleAtJoin: 'roleAtJoin',
+  joinedAt: 'joinedAt',
+  lastSeenAt: 'lastSeenAt',
+  leftAt: 'leftAt'
+} as const
+
+export type LiveSessionParticipantScalarFieldEnum = (typeof LiveSessionParticipantScalarFieldEnum)[keyof typeof LiveSessionParticipantScalarFieldEnum]
 
 
 export const SortOrder = {
