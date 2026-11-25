@@ -25,6 +25,24 @@ enum AuthTokenType {
   password_reset
 }
 
+enum ClassroomStaffRole {
+  host      // additional host (the classroom owner is the primary host via classrooms.owner_id)
+  manager
+}
+
+
+enum SessionStatus {
+  scheduled
+  live
+  ended
+}
+
+enum SessionEndReason {
+  host_ended   // a host or manager clicked "End Session"
+  all_left     // every participant left (after a grace period)
+  system       // server cleanup, e.g. a session left "live" after a crash
+}
+
 model User {
   id                  String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   email               String     @unique @db.Citext
@@ -49,6 +67,11 @@ model User {
   authTokens          AuthToken[]
   invitationsSent     ClassroomInvitation[] @relation("InvitedBy")
   invitationsAccepted     ClassroomInvitation[] @relation("AcceptedBy")
+  ownedClassrooms Classroom[] @relation("ClassroomOwner")
+  staffRoles      ClassroomTeacher[] @relation("StaffUser")
+  staffAdded      ClassroomTeacher[] @relation("StaffAddedBy")
+  sessionsStarted LiveSession[]      @relation("SessionStartedBy")
+  sessionsEnded   LiveSession[]      @relation("SessionEndedBy")
 
   @@index([role])
   @@map("users")
@@ -106,30 +129,48 @@ enum InvitationStatus {
   revoked
 }
 
-model Course {
-  id        String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  code      String      @unique @db.VarChar(30)
-  title     String      @db.VarChar(150)
-  createdAt DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+// model Course {
+//   id        String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+//   code      String      @unique @db.VarChar(30)
+//   title     String      @db.VarChar(150)
+//   createdAt DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+//   updatedAt DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  classrooms Classroom[]
+//   classrooms Classroom[]
 
-  @@map("courses")
-}
+//   @@map("courses")
+// }
 
+//  Add owner_id (a foreign key to users) to classrooms, or use the ClassroomTeacher table we planned
+//  also change name to title
+// make course_id is optional
+/*For the first version, scheduleInfo as optional free text is enough,
+  because FR-5 only asks the teacher to provide it.
+  The structured scheduling is in live_sessions,
+  where a specific class meeting gets a scheduled_start,
+  a status (scheduled, live, ended), and started_at and ended_at.
+  That table is needed for FR-6 and FR-7 anyway,
+  so don't build a separate schedule system inside Classroom.*/
+  // course is not in D1
 model Classroom {
   id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  courseId  String    @map("course_id") @db.Uuid
-  name      String    @db.VarChar(100)                       // e.g. "Section A"
+  // courseId  String?    @map("course_id") @db.Uuid
+  ownerId String @map("owner_id") @db.Uuid
+  title     String    @db.VarChar(100)                       // e.g. "Section A"
+  description  String? @db.Text
+  scheduleInfo String? @db.VarChar(255)
   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
 
-  course      Course                @relation(fields: [courseId], references: [id])
-  invitations ClassroomInvitation[]
+  owner   User   @relation("ClassroomOwner", fields: [ownerId], references: [id])
+  // course      Course?                @relation(fields: [courseId], references: [id])
+  staff        ClassroomTeacher[]
+  liveSessions LiveSession[]
 
-  @@index([courseId])
+  invitations ClassroomInvitation[]
+  @@index([ownerId])
+  // @@index([courseId])
   @@map("classrooms")
 }
 
@@ -158,3 +199,62 @@ model ClassroomInvitation {
   @@map("classroom_invitations")
 }
 
+// ---------------------------------------------------------------------------
+// FR-6 / FR-7: hosts, managers and live sessions
+// ---------------------------------------------------------------------------
+
+
+// Extra hosts / managers of a classroom (FR-7: multiple hosts/managers).
+// The owner does NOT need a row here: owner_id already makes them the primary host.
+model ClassroomTeacher {
+  id          String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  classroomId String             @map("classroom_id") @db.Uuid
+  userId      String             @map("user_id") @db.Uuid
+  role        ClassroomStaffRole
+  addedById   String             @map("added_by_id") @db.Uuid
+  createdAt   DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  classroom   Classroom          @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+  user        User               @relation("StaffUser", fields: [userId], references: [id])
+  addedBy     User               @relation("StaffAddedBy", fields: [addedById], references: [id])
+
+  @@unique([classroomId, userId])   // a user has one staff role per classroom
+  @@index([userId])                 // "which classrooms can this teacher manage?"
+  @@map("classroom_teachers")
+}
+
+// One row per class meeting. Deliberately NO max-duration field (FR-6):
+// a session ends only when ended_at is set by a host/manager or by "all left".
+model LiveSession {
+  id             String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  classroomId    String            @map("classroom_id") @db.Uuid
+
+  status         SessionStatus     @default(scheduled)
+  scheduledStart DateTime?         @map("scheduled_start") @db.Timestamptz(6)  // optional plan
+  startedAt      DateTime?         @map("started_at") @db.Timestamptz(6)       // set when it goes live
+  endedAt        DateTime?         @map("ended_at") @db.Timestamptz(6)
+
+  startedById    String?           @map("started_by_id") @db.Uuid
+  endedById      String?           @map("ended_by_id") @db.Uuid                // NULL if ended by all_left / system
+  endReason      SessionEndReason? @map("end_reason")
+
+  createdAt      DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  classroom      Classroom         @relation(fields: [classroomId], references: [id], onDelete: Cascade)
+  startedBy      User?             @relation("SessionStartedBy", fields: [startedById], references: [id])
+  endedBy        User?             @relation("SessionEndedBy", fields: [endedById], references: [id])
+
+  @@index([classroomId, status])
+  @@index([classroomId, startedAt])
+  @@map("live_sessions")
+}
+
+// ---------------------------------------------------------------------------
+// Add this to the migration SQL by hand (Prisma cannot express partial indexes):
+// at most ONE live session per classroom at any time.
+// ---------------------------------------------------------------------------
+//
+// CREATE UNIQUE INDEX live_sessions_one_live_per_classroom
+//   ON live_sessions (classroom_id)
+//   WHERE status = 'live';
